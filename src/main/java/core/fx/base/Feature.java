@@ -23,4 +23,10 @@ public class Feature<V> implements Comparable<Feature<V>>{
     public int compareTo(Feature<V> other) {
         return name.compareToIgnoreCase(other.getName());
     }
+
+    @Override
+    public String toString(){
+        return "Feature(" + name + ": " + value + ")";
+    }
+
 }

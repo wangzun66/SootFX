@@ -10,7 +10,4 @@ public interface FeatureExtractionUnit<V,T> {
     default String getName(String value){
         return String.format("%s(\"%s\")", getName(), value);
     }
-
-    Feature<V> extract(T target);
-
 }

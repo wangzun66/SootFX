@@ -5,8 +5,6 @@ import core.fx.base.MethodFEU;
 import soot.SootMethod;
 
 public class MethodStmtCount implements MethodFEU<Integer> {
-
-
     @Override
     public Feature<Integer> extract(SootMethod method) {
         if(method.hasActiveBody()){

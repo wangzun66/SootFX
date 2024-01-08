@@ -145,4 +145,9 @@ public class FxUtil {
         return allFeatures;
     }
 
+    public static boolean isRelatedType(Type type1, Type type2){
+        FastHierarchy hierarchy = Scene.v().getOrMakeFastHierarchy();
+        return hierarchy.canStoreType(type1, type2) || hierarchy.canStoreType(type2, type1);
+    }
+
 }

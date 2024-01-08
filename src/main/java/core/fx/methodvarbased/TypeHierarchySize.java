@@ -1,18 +1,22 @@
-package core.fx.variablebased;
+package core.fx.methodvarbased;
 
 import core.fx.base.Feature;
-import core.fx.base.VariableFEU;
-import soot.*;
-import soot.jimple.Stmt;
 
+import core.fx.base.MethodVarFEU;
+import soot.*;
 import java.util.*;
 
-public class TypeHierarchySize implements VariableFEU<Integer> {
+public class TypeHierarchySize implements MethodVarFEU<Integer> {
+    /**
+     * TAS: Size of Query Type-Hierarchy
+     * @param target method
+     * @param value query-variable's type
+     * @return
+     */
     @Override
-    public Feature<Integer> extract(SootMethod target, Stmt tail, Value variable) {
+    public Feature<Integer> extract(SootMethod target, Value value) {
         FastHierarchy hierarchy = Scene.v().getOrMakeFastHierarchy();
-        Type type = variable.getType();
-        SootClass clazz = Scene.v().getSootClass(type.toString());
+        SootClass clazz = Scene.v().getSootClass(value.getType().toString());
         SootClass obj = Scene.v().getSootClass("java.lang.Object");
         Deque<SootClass> queue = new ArrayDeque<>();
         queue.add(clazz);
@@ -26,7 +30,10 @@ public class TypeHierarchySize implements VariableFEU<Integer> {
             }
             superRelatedClasses.add(sc);
             queue.addAll(sc.getInterfaces());
-            queue.add(sc.getSuperclass());
+            SootClass superClass = sc.getSuperclass();
+            if(superClass!=null){
+                queue.add(superClass);
+            }
         }
         //get all sub classed and interfaces
         queue.add(clazz);

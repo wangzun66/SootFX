@@ -1,7 +1,7 @@
-package core.fx.variablebased;
+package core.fx.methodstmtbased;
 
+import core.fx.FxUtil;
 import core.fx.base.Feature;
-import core.fx.base.VariableFEU;
 import soot.*;
 import soot.jimple.InvokeExpr;
 import soot.jimple.Stmt;
@@ -10,9 +10,10 @@ import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JCastExpr;
 import soot.jimple.internal.JInstanceFieldRef;
 
+@Deprecated
 //Stmts will be kept after running one round in TypeBasedStrategy
-public class TypeRelatedStmtCount implements VariableFEU<Integer> {
-    @Override
+public class TypeRelatedStmtCount{
+
     public Feature<Integer> extract(SootMethod target, Stmt tail, Value variable) {
         Type type = variable.getType();
         int count = (int) target.getActiveBody().getUnits().stream().filter(unit -> isTypeRelatedStmt(unit, type)).count();
@@ -25,13 +26,13 @@ public class TypeRelatedStmtCount implements VariableFEU<Integer> {
                 InvokeExpr expr = ((Stmt) unit).getInvokeExpr();
                 if(expr instanceof AbstractInstanceInvokeExpr){
                     Value base = ((AbstractInstanceInvokeExpr) expr).getBase();
-                    if(VarFEUUtil.isRelatedType(base.getType(), type)){
+                    if(FxUtil.isRelatedType(base.getType(), type)){
                         return true;
                     }
                 }
                 for(Value arg : expr.getArgs()){
                     Type argType = arg.getType();
-                    if(VarFEUUtil.isRelatedType(argType, type)){
+                    if(FxUtil.isRelatedType(argType, type)){
                         if(arg instanceof JInstanceFieldRef){
                             return true;
                         }
@@ -52,19 +53,8 @@ public class TypeRelatedStmtCount implements VariableFEU<Integer> {
             if(rightOp.toString().startsWith("this$")){
                 return true;
             }
-            if(leftOp instanceof JInstanceFieldRef && VarFEUUtil.isRelatedType(leftOp.getType(), type)){
+            if(FxUtil.isRelatedType(leftOp.getType(), type) || FxUtil.isRelatedType(rightOp.getType(), type)){
                 return true;
-            }
-            if(rightOp instanceof JInstanceFieldRef && VarFEUUtil.isRelatedType(rightOp.getType(), type)){
-                return true;
-            }
-            if(stmt.containsInvokeExpr()){
-                InvokeExpr expr = stmt.getInvokeExpr();
-                if(expr instanceof AbstractInstanceInvokeExpr){
-                    if(VarFEUUtil.isRelatedType(leftOp.getType(), type) || VarFEUUtil.isRelatedType(rightOp.getType(), type)){
-                        return true;
-                    }
-                }
             }
         }
         return false;

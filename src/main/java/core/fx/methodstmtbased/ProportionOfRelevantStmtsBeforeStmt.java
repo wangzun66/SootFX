@@ -14,7 +14,7 @@ import soot.toolkits.graph.DirectedGraph;
 
 import java.util.*;
 
-public class ProportionOfRelevantStmtsBeforeSS implements MethodStmtFEU<Double> {
+public class ProportionOfRelevantStmtsBeforeStmt implements MethodStmtFEU<Double> {
 
     /**
      * AAS: Maximum Proportion of AAS Sparse-CFG

@@ -45,9 +45,15 @@ public class RelatedTypesCount implements MethodVarFEU<Integer> {
                         }
                     }
                 }
-                if (isRelated || expr instanceof AbstractInstanceInvokeExpr) {
+                if(expr instanceof AbstractInstanceInvokeExpr){
                     Type bt = ((AbstractInstanceInvokeExpr) expr).getBase().getType();
-                    worklist.add(bt);
+                    if(isRelated){
+                        worklist.add(bt);
+                    }else{
+                        if(FxUtil.isRelatedType(bt, type)){
+                            worklist.add(bt);
+                        }
+                    }
                 }
             }
             if (unit instanceof JAssignStmt) {

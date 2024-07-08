@@ -1,20 +1,18 @@
-package core.fx.methodvarbased;
+package core.fx.variablebased;
 
 import core.fx.base.Feature;
 
 import core.fx.base.MethodVarFEU;
+import core.fx.base.VariableFEU;
 import soot.*;
 import java.util.*;
 
-public class TypeHierarchySize implements MethodVarFEU<Integer> {
+public class TypeHierarchySize implements VariableFEU<Integer> {
     /**
-     * TAS: Size of Query Type-Hierarchy
-     * @param target method
-     * @param value query-variable's type
-     * @return
+     * Size of the type hierarchy of the given value's type.
      */
     @Override
-    public Feature<Integer> extract(SootMethod target, Value value) {
+    public Feature<Integer> extract(Value value) {
         FastHierarchy hierarchy = Scene.v().getOrMakeFastHierarchy();
         SootClass clazz = Scene.v().getSootClass(value.getType().toString());
         SootClass obj = Scene.v().getSootClass("java.lang.Object");

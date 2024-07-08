@@ -20,13 +20,12 @@ import java.util.List;
 import java.util.Set;
 
 
-public class ProportionOfVisitedMethod implements MethodVarFEU<Double> {
+public class PropOfRelatedInvoke implements MethodVarFEU<Double> {
 
     /**
-     * TAS: Number of invoke-stmts that must be stay in sparse-cfg after running TAS
-     * @param target method
-     * @param value query-variable's type
-     * @return
+     *  Proportion of invoke-statements which are related to the given value.
+     *  An invoke-statements is related to the given value, if it contains value whose type is
+     *  same as the given value's type.
      */
     @Override
     public Feature<Double> extract(SootMethod target, Value value) {

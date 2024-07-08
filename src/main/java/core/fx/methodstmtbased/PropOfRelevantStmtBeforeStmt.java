@@ -14,23 +14,20 @@ import soot.toolkits.graph.DirectedGraph;
 
 import java.util.*;
 
-public class ProportionOfRelevantStmtsBeforeStmt implements MethodStmtFEU<Double> {
+public class PropOfRelevantStmtBeforeStmt implements MethodStmtFEU<Double> {
 
     /**
-     * AAS: Maximum Proportion of AAS Sparse-CFG
-     * @param target method
-     * @param tail  query stmt
-     * @return
+     * Proportion of the relevant statements preceding the given stmt. A statement is considering as
+     * if it is an invoke-statement, identity-statement or assign-statement
      */
-
-    public Feature<Double> extract(SootMethod target, Stmt tail) {
+    public Feature<Double> extract(SootMethod target, Stmt stmt) {
         DirectedGraph<Unit> graph = new BriefUnitGraph(target.getActiveBody());
         MutableGraph<Unit> visited = GraphBuilder.directed().build();
         Map<Unit, Integer> unit2Num = new HashMap<>();
         for(Unit head : graph.getHeads()){
             convertUnitsToNum(graph, head, visited, 0, unit2Num);
         }
-        int count = getRelevantStmtsCount(unit2Num, tail);
+        int count = getRelevantStmtsCount(unit2Num, stmt);
         int methodSize = target.getActiveBody().getUnits().size();
         if(methodSize == 0){
             methodSize = 1;

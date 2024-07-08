@@ -9,8 +9,11 @@ import soot.jimple.Stmt;
 import soot.jimple.internal.JAssignStmt;
 
 
-public class ProportionOfRelevantStmts implements MethodFEU<Double> {
-    /**TAS: Maximum Proportion of TAS Sparse-CFG*/
+public class PropOfInvokeAssign implements MethodFEU<Double> {
+
+    /**
+     * Proportion of invoke-statements and assign-statements in the given method
+     */
     @Override
     public Feature<Double> extract(SootMethod target) {
         int count = (int) target.getActiveBody().getUnits().stream().filter(unit -> isRelevantStmt(unit)).count();

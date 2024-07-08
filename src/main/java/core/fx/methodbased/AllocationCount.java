@@ -13,7 +13,9 @@ import soot.jimple.internal.JNewExpr;
 
 public class AllocationCount implements MethodFEU<Integer> {
 
-    /**AAS: Number of Allocation-Sites*/
+    /**
+     * Number of the allocation-sites in the given method.
+     */
     @Override
     public Feature<Integer> extract(SootMethod target){
         int count = (int) target.getActiveBody().getUnits().stream().filter(unit -> isAllocStmt(unit)).count();

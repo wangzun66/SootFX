@@ -17,10 +17,9 @@ import java.util.Set;
 public class RelatedTypesCount implements MethodVarFEU<Integer> {
 
     /**
-     * TAS: Number of Query-Related Types
-     * @param target method
-     * @param value query-variable's type
-     * @return
+     * Number of types in the given method which are related to the given value.
+     * A type is related to the given value, the type has subtype-supertype relationship
+     * with the type of the given value.
      */
     @Override
     public Feature<Integer> extract(SootMethod target, Value value) {

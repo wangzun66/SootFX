@@ -12,15 +12,12 @@ import soot.toolkits.graph.DirectedGraph;
 
 import java.util.*;
 
-public class ProportionOfVisitedMethodBeforeStmt implements MethodStmtFEU<Double> {
-    /**
-     * AAS: Maximum Proportion of visited methods before stmt
-     * @param target method
-     * @param tail  query stmt
-     * @return
-     */
+public class PropOfInvokeBeforeStmt implements MethodStmtFEU<Double> {
 
-    public Feature<Double> extract(SootMethod target, Stmt tail) {
+    /**
+     * Proportion of invoke-statements preceding the given stmt
+     */
+    public Feature<Double> extract(SootMethod target, Stmt stmt) {
         DirectedGraph<Unit> graph = new BriefUnitGraph(target.getActiveBody());
         MutableGraph<Unit> visited = GraphBuilder.directed().build();
         Map<Unit, Integer> unit2Num = new HashMap<>();
@@ -29,7 +26,7 @@ public class ProportionOfVisitedMethodBeforeStmt implements MethodStmtFEU<Double
         }
         List<Unit> invokes = new ArrayList<>();
         List<Unit> visitedInvokes = new ArrayList<>();
-        int base = unit2Num.get(tail);
+        int base = unit2Num.get(stmt);
         for(Unit unit : target.getActiveBody().getUnits()){
             if((unit instanceof Stmt)){
                 if (((Stmt) unit).containsInvokeExpr()){

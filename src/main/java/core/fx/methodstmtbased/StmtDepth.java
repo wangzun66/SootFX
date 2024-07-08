@@ -11,18 +11,15 @@ import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.DirectedGraph;
 import java.util.*;
 
-public class StmtDepthProportion implements MethodStmtFEU<Double> {
+public class StmtDepth implements MethodStmtFEU<Double> {
 
     /**
-     * AAS: Depth of Query Statement
-     * @param target method
-     * @param tail  query stmt
-     * @return
+     * Depth of the given stmt in the given method target.
      */
     int maxDepth = -1;
 
     @Override
-    public Feature<Double> extract(SootMethod target, Stmt tail) {
+    public Feature<Double> extract(SootMethod target, Stmt stmt) {
         DirectedGraph<Unit> graph = new BriefUnitGraph(target.getActiveBody());
         MutableGraph<Unit> visited = GraphBuilder.directed().build();
         Map<Unit, Integer> unit2Num = new HashMap<>();
@@ -30,7 +27,7 @@ public class StmtDepthProportion implements MethodStmtFEU<Double> {
         for(Unit head : graph.getHeads()){
             convertUnitsToNum(graph, head, visited, 0, unit2Num);
         }
-        Double proportion = (double) unit2Num.get(tail) / (double) maxDepth ;
+        Double proportion = (double) unit2Num.get(stmt) / (double) maxDepth ;
         return new Feature<>(this.getClass().getSimpleName(), Math.floor((proportion*10) + 0.5)/10);
     }
 

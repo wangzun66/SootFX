@@ -5,7 +5,6 @@ import core.fx.base.MethodFEU;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
-import soot.jimple.InvokeExpr;
 import soot.jimple.Stmt;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JIdentityStmt;

@@ -2,7 +2,6 @@ package core.fx.variablebased;
 
 import core.fx.base.Feature;
 
-import core.fx.base.MethodVarFEU;
 import core.fx.base.VariableFEU;
 import soot.*;
 import java.util.*;
